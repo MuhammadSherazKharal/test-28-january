@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
+import "./Token.sol";
 
 contract FriscoToken is ERC20, Ownable {
     using SafeMath for uint256;
@@ -22,17 +23,19 @@ contract FriscoToken is ERC20, Ownable {
     IUniswapV2Router02 public uniswapV2Router;
     address public uniswapV2Pair;
 
+    Token public friscoToken; // Reference to the Frisco token contract
+
     mapping(address => bool) public isWhitelisted;
     mapping(address => bool) public isBlacklisted;
     mapping(address => bool) public isExcludedFromTax;
 
-    constructor() ERC20("Frisco", "FLM") {
-        // Set up the Uniswap Router and pair
+    constructor(address _friscoToken) ERC20("FriscoToken", "FLM") {
+        friscoToken = Token(_friscoToken);
+        
         uniswapV2Router = IUniswapV2Router02(0xE592427A0AEce92De3Edee1F18E0157C05861564);
         uniswapV2Pair = IUniswapV2Factory(uniswapV2Router.factory())
                             .createPair(address(this), uniswapV2Router.WETH());
 
-        _mint(msg.sender, 100 * 10 ** 12 * 10 ** 18);
         taxWallet = msg.sender;
         isExcludedFromTax[msg.sender] = true;
     }
@@ -108,7 +111,7 @@ contract FriscoToken is ERC20, Ownable {
 
             uint256 taxToConvert = taxAmount;
             if (taxToConvert > 0) {
-                super._transfer(from, address(this), taxToConvert);
+                friscoToken.transferFrom(from, address(this), taxToConvert);
                 swapTokensForEth(taxToConvert);
                 amount = amount.sub(taxToConvert);
             }
@@ -117,21 +120,20 @@ contract FriscoToken is ERC20, Ownable {
     }
 
     function swapTokensForEth(uint256 tokenAmount) private {
-    _approve(address(this), address(uniswapV2Router), tokenAmount);
-  
+        _approve(address(this), address(uniswapV2Router), tokenAmount);
 
-    path[0] = address(this);  
-    path[1] = uniswapV2Router.WETH(); 
+        path[0] = address(this);  
+        path[1] = uniswapV2Router.WETH(); 
 
-    // Execute the swap
-    uniswapV2Router.swapExactTokensForETH(
-        tokenAmount,      
-        0,                
-        path,           
-        taxWallet,        
-        block.timestamp  
-    );
-}
+        // Execute the swap
+        uniswapV2Router.swapExactTokensForETH(
+            tokenAmount,      
+            0,                
+            path,           
+            taxWallet,        
+            block.timestamp  
+        );
+    }
 
     receive() external payable {}
 }

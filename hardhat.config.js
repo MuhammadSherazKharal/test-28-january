@@ -34,7 +34,7 @@ module.exports = {
     development: {
       url: "http://localhost:8545",
       gasPrice:20000000000,
-      accounts: [`0x75a45cb7db6c26bf10a70beef6fa19c6993b2d567ee755c41e9f0af4192c3ed8`] 
+      accounts: [`0xb67f5f05f8fff5d0c08cb7d406a65874fde767bbc2359ed1a9c71ca8dc2b5009`] 
     },
   },
 
