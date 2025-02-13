@@ -4,10 +4,10 @@ async function main() {
     console.log("Account balance:", (await deployer.getBalance()).toString());
     const Persale = await ethers.getContractFactory("Presale");
 
-    const Token_ADDRESS = "0x658E9CFa4D53102C643b01cf853Db166fc91e3f5";
-    const USDT_ADDRESS = "0x79DfbE056BA387bFF9b09a1A7f3E6822430C787d";
-    const Wallet_ADDRESS = "0xeC3169B719392810Cb09Ca583231a82Aa20dA6E4";
-   const price="0x212BfA6d8710886ca1086D170dB9348a37fC22E7"; 
+    const Token_ADDRESS = "0xCF9b227548BF53FbeAd0043af79301C3030Cc9D6";
+    const USDT_ADDRESS = "0x01D63ac37E8eDbc70c2060De09499C22422C3755";
+    const Wallet_ADDRESS = "0xB35CdEa74096fEDbcA576203853EA7ccc61ffD4A";
+   const price="0x4AF6770e6e49ce5f4A77cEBBc6Fbaed24068Ae0E"; 
     
 
 

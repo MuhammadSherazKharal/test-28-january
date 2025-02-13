@@ -662,8 +662,8 @@
       "artifacts": []
     },
     "D:\\Nodejs\\test\\test-28-january\\contracts\\USDT.sol": {
-      "lastModificationDate": 1739372568769,
-      "contentHash": "4db882cda5a52b295501c41067647786",
+      "lastModificationDate": 1739453931562,
+      "contentHash": "2cc3bb49620060d73ed62de74c49b3a1",
       "sourceName": "contracts/USDT.sol",
       "solcConfig": {
         "version": "0.8.17",
@@ -697,7 +697,7 @@
         "^0.8.7"
       ],
       "artifacts": [
-        "ADT"
+        "USDT"
       ]
     },
     "D:\\Nodejs\\test\\test-28-january\\contracts\\Presale.sol": {
